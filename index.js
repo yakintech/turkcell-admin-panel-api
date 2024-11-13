@@ -23,7 +23,14 @@ app.get("/api/cities", async (req, res) => {
 
 
 app.get("/api/facibilities", async (req, res) => {
-    var data = await Facibility.find({ isDeleted: false });
+    var data = await Facibility.find({ isDeleted: false }).populate('city');
+    res.json(data);
+});
+
+
+app.get("/api/facibilities/:id", async (req, res) => {
+    var id = req.params.id;
+    var data = await Facibility.findOne({ _id: id, isDeleted: false }).populate('city');
     res.json(data);
 });
 

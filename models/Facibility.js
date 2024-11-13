@@ -9,7 +9,7 @@ const FacibilitySchema = new mongoose.Schema({
     name: String,
     description: String,
     address: String,
-    cityId: {
+    city: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'City'
     },
