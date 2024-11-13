@@ -9,7 +9,14 @@ const FacibilitySchema = new mongoose.Schema({
     name: String,
     description: String,
     address: String,
-    city: String
+    cityId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'City'
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    }
 },
 {timestamps: true});
 
