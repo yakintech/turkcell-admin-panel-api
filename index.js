@@ -1,26 +1,33 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const Facibility = require('./models/Facibility');
+const { connectDB } = require('./config/db');
 
 app.use(cors());
 app.use(express.json());
-
-const PORT = process.env.PORT || 5001;
 require('dotenv').config()
 
+ connectDB();
 
-app.get("/api/facibilities", (req, res) => {
-    res.json([
-        {
-            id: 1,
-            name: "Facility 1"
-        },
-        {
-            id: 2,
-            name: "Facility 2"
-        }
-    ]);
+const PORT = process.env.PORT || 5001;
+
+
+
+app.get("/api/facibilities", async (req, res) => {
+    var data = await Facibility.find();
+    res.json(data);
 });
+
+
+app.post("/api/facibilities", async (req, res) => {
+    console.log(req.body);
+    var data = req.body;
+    var facibility = new Facibility(data);
+    await facibility.save();
+    res.json({ id: facibility._id });
+}
+);
 
 
 
