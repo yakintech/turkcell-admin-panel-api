@@ -1,10 +1,11 @@
+const authMiddleware = require('../middlewares/authMiddleware');
 const AdminUser = require('../models/AdminUser');
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 
 
 
-router.post('/', async (req, res) => {
+router.post('/',authMiddleware, async (req, res) => {
     const { email } = req.body;
     let { password } = req.body;
 
