@@ -5,15 +5,26 @@ const Facibility = require('./models/Facibility');
 const City = require('./models/City');
 
 const { connectDB } = require('./config/db');
+const authMiddleware = require('./middlewares/authMiddleware');
+const authRoutes = require('./routes/authRoutes');
+const adminUserRoutes = require('./routes/adminUserRoutes');
 
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+        credentials: true
+    }
+));
+
 app.use(express.json());
 require('dotenv').config()
 
- connectDB();
+connectDB();
 
 const PORT = process.env.PORT || 5001;
 
+app.use("/api/auth",authRoutes);
+app.use("/api/adminuser", adminUserRoutes)
 
 app.get("/api/cities", async (req, res) => {
     var data = await City.find({ isDeleted: false });
