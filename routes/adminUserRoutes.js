@@ -6,8 +6,7 @@ const bcrypt = require('bcrypt');
 
 
 router.post('/',authMiddleware, async (req, res) => {
-    const { email } = req.body;
-    let { password } = req.body;
+    const { email, password } = req.body;
 
     let adminUser = new AdminUser({
         email,

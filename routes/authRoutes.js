@@ -17,7 +17,7 @@ router.post("/login", async (req, res) => {
 
     if (adminUser) {
         const token = jwt.sign({ id: adminUser._id }, "my_secret_key", {
-            expiresIn: "20s",
+            expiresIn: "2h",
         })
 
         //guid ile refresh token üretip hem db ye kaydedip hem de client a gönder
@@ -26,7 +26,7 @@ router.post("/login", async (req, res) => {
         let newRefreshtoken = new RefreshToken({
             token: refreshToken,
             userId: adminUser._id,
-            expiresAt: new Date(Date.now() + 60 * 60 * 1000), // 1 hour
+            expiresAt: new Date(Date.now() + 60 * 60 * 4000), // 4 hours
             createdByIp: "0.0.0.0"
         })
 
@@ -67,7 +67,7 @@ router.post("/refresh-token", async (req, res) => {
     }
 
     let token = jwt.sign({ id: refreshTokenDoc.userId}, "my_secret_key", {
-        expiresIn: "20s",
+        expiresIn: "2h",
     })
 
     res.cookie("token", token, {
