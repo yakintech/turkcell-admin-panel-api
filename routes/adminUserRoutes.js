@@ -18,4 +18,15 @@ router.post('/',authMiddleware, async (req, res) => {
 
 });
 
+router.get('/', async (req, res) => {
+    let adminUsers = await AdminUser.find({});
+    res.json(adminUsers);
+});
+
+router.delete('/:id', async (req, res) => {
+    const id = req.params.id;
+    await AdminUser.findByIdAndDelete(id);
+    res.json({ id });
+});
+
 module.exports = router;
